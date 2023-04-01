@@ -9,7 +9,8 @@ This a classic dinosaur game built using pygame.
 2. [Nandana B Pillai](https://github.com/Nandanabpillai)
 3. [Jesmi George](https://github.com/jesmigeorge)
 ## Link to product walkthrough
-[link to video]
+(https://www.kapwing.com/videos/64286a14d62db100256c15e2)
+
 ## How it Works ?
 The motive of the project is to reimagine one of the all-time favorites, the Dinosaur Game. The project is a collaborative approach to give a new and improved look to the UI of the game, using the different pygame modules. The idea is to create a more chalenging game setup for the user, with visual snd sound effects, which means more fun... 
 
