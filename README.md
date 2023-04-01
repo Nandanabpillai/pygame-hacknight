@@ -21,7 +21,6 @@ Let our old Dino get an update too...
 ## Libraries used
 pygame - 2.3.0 version
 
-mysql.connector
 ## How to configure
 `pip install pygame`
 ## How to Run
