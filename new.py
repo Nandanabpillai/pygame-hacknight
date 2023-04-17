@@ -55,7 +55,8 @@ class Cact:
             obstacles.pop(0)
 
     def displayCact(self, cactPosY, frameCact):
-        screen.blit(cactus[frameCact], (self.cactPos, cactPosY))
+        screen.blit(cactus[3], (self.cactPos, cactPosY))
+        self.rect=pygame.Rect(self.cactPos, cactPosY,49,130)
 
 loop = 0
 grPos = 0
@@ -69,10 +70,10 @@ lastUpdate = pygame.time.get_ticks()
 animationTime = 100
 frame = 0
 frameBird = 0
-jumpCount = 10
 isJump = False
+jumpCount = 5
 x = 50
-y = 200
+y = 80
 points=0
 font=pygame.font.SysFont('Helvetica',30)
 collision = 0
@@ -94,7 +95,6 @@ bird.append(pygame.image.load('bird/b1.png'))
 bird.append(pygame.image.load('bird/b3.png'))
 bird.append(pygame.image.load('bird/b6.png'))
 
-cactRect = [cactPos, 380, 80, 124]      
 run = True
 while run:
     loop += 1
@@ -109,20 +109,19 @@ while run:
     if collision == 0:
         keys = pygame.key.get_pressed()
     
-        
-        
-            
         if points < sc:
             screen.blit(grSurface, (grPos,400))
             screen.blit(skySurface, (0,0))
             if not (keys[pygame.K_SPACE] or keys[pygame.K_UP]):
                 screen.blit(animations[frame], (50,300))
+                frameRect=pygame.Rect(50,300,187,217)
             else:
                 if not isJump:
                     if keys[pygame.K_SPACE] or keys[pygame.K_UP]:
+                        frameRect=pygame.Rect(50,80,187,217)
                         isJump=True
                 else:
-                    if jumpCount>=-10:
+                    if jumpCount>=-5:
                         neg=1
                         if jumpCount<0:
                             neg=-1
@@ -130,7 +129,7 @@ while run:
                         jumpCount-=1
                     else:
                         isJump=False
-                        jumpCount=10
+                        jumpCount=5
                 redrawGameWindow()
         else:
             screen.blit(grNight, (grPos,400))
@@ -177,24 +176,25 @@ while run:
         for i in obstacles:
             i.displayCact(380,0)
             i.cactnewPos(10)
-
-        
+            if frameRect.colliderect(i.rect):
+                #print(i.rect)
+                collision = 1
+                screen = pygame.display.set_mode((width,height))
+                pygame.display.set_caption('Game Over!!!')
+                screen.blit(grSurface, (0,400))
+                screen.blit(skySurface, (0,0))
+                screen.blit(animations[frame], (50,300))
+                i.displayCact(380,0)
+                text=font.render("GAME OVER",True,(0,0,0))
+                text1=font.render("Score: " + str(int(points)), True, (0,0,0))
+                textRect=text.get_rect()
+                textRect.center=(500,250)
+                textRect1=text1.get_rect()
+                textRect1.center=(500,300)
+                screen.blit(text, textRect)
+                screen.blit(text1, textRect1)
+                clock.tick(0)
+                pygame.mixer.pause()
         score()
         clock.tick(60)
-##        if frameRect.colliderect(cactRect):
-##            collision = 1
-##            screen = pygame.display.set_mode((width,height))
-##            pygame.display.set_caption('Game Over!!!')
-##            screen.blit(grSurface, (0,400))
-##            screen.blit(skySurface, (0,0))
-##            text=font.render("GAME OVER",True,(0,0,0))
-##            text1=font.render("Score: " + str(int(points)), True, (0,0,0))
-##            textRect=text.get_rect()
-##            textRect.center=(500,250)
-##            textRect1=text1.get_rect()
-##            textRect1.center=(500,300)
-##            screen.blit(text, textRect)
-##            screen.blit(text1, textRect1)
-##            clock.tick(0)
-##            pygame.mixer.pause()
-    pygame.display.update()
+        pygame.display.update()
